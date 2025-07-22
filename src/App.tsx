@@ -9,11 +9,11 @@ import {
   Platform,
 } from 'react-native';
 
-
-function App(): React.JSX.Element { const isDarkMode = useColorScheme() === 'dark'; // Sadece StatusBar barStyle için kullanılıyor
+function App(): React.JSX.Element { const isDarkMode = useColorScheme() === 'dark'; 
 return (
     <SafeAreaView style={[styles.safeArea,{paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight : 0, },]}>
       <StatusBar barStyle={isDarkMode ? 'light-content' : 'dark-content'} />
+
       <View style={styles.contentContainer}>
         <Text> just clean screen </Text>
 
