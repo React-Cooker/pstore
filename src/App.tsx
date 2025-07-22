@@ -7,7 +7,9 @@ import {
   Text,
   SafeAreaView,
   Platform,
+  TextInput,
 } from 'react-native';
+import { FlatList } from 'react-native/types_generated/index';
 
 function App(): React.JSX.Element { const isDarkMode = useColorScheme() === 'dark'; 
 return (
@@ -15,7 +17,15 @@ return (
       <StatusBar barStyle={isDarkMode ? 'light-content' : 'dark-content'} />
 
       <View style={styles.contentContainer}>
-        <Text> just clean screen </Text>
+        <Text style={styles.header}>PATİKASTORE</Text>
+        <TextInput sytle={styles.searchBar} placeholder='Ara...'>
+
+        <FlatList
+        data={products_data}
+        renderItem={renderProduct}
+        keyExtractor={item => item.id.toString()}
+        numColumns={2}
+        />
 
       </View>
     </SafeAreaView>
@@ -32,6 +42,12 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems:'center',
   },
+  header: {
+    
+  } 
+  searchBar: {
+    
+  }
 });
 
 export default App;
