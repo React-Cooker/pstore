@@ -1,53 +1,71 @@
 import React from 'react';
 import {
-  StatusBar,
+  SafeAreaView,
   StyleSheet,
-  useColorScheme,
   View,
   Text,
-  SafeAreaView,
-  Platform,
   TextInput,
+  FlatList,
 } from 'react-native';
-import { FlatList } from 'react-native/types_generated/index';
+import ProductCard from './components/ProductCard';
+import products_data from './products.json';
 
-function App(): React.JSX.Element { const isDarkMode = useColorScheme() === 'dark'; 
-return (
-    <SafeAreaView style={[styles.safeArea,{paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight : 0, },]}>
-      <StatusBar barStyle={isDarkMode ? 'light-content' : 'dark-content'} />
+// 1. ADIM: Ürünün "kimlik kartını" (interface) burada tanımladık.
+interface Product {
+  id: number;
+  title: string;
+  imgURL: string;
+  price: string;
+  inStock: boolean;
+}
 
-      <View style={styles.contentContainer}>
+function App(): React.JSX.Element {
+  
+  // 2. ADIM: Fonksiyona, alacağı item'ın tipini öğrettik.
+  const renderProduct = ({item}: {item: Product}) => (
+    <ProductCard product={item} />
+  );
+
+  return (
+    <SafeAreaView style={styles.container}>
+      <View style={styles.inner_container}>
         <Text style={styles.header}>PATİKASTORE</Text>
-        <TextInput sytle={styles.searchBar} placeholder='Ara...'>
+        <TextInput style={styles.searchBar} placeholder="Ara..." />
 
         <FlatList
-        data={products_data}
-        renderItem={renderProduct}
-        keyExtractor={item => item.id.toString()}
-        numColumns={2}
+          data={products_data}
+          renderItem={renderProduct}
+          keyExtractor={item => item.id.toString()}
+          numColumns={2}
         />
-
       </View>
     </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
-  safeArea: {
+  container: {
     flex: 1,
-    paddingBottom: 0,
-    paddingHorizontal: 0,
+    backgroundColor: '#eceff1',
   },
-  contentContainer: {
+  inner_container: {
     flex: 1,
-    alignItems:'center',
+    padding: 10,
   },
   header: {
-    
-  } 
+    fontSize: 40,
+    fontWeight: 'bold',
+    color: '#800080',
+    textAlign: 'center',
+    margin: 5,
+  },
   searchBar: {
-    
-  }
+    backgroundColor: 'white',
+    borderRadius: 10,
+    padding: 12,
+    marginVertical: 10,
+    fontSize: 16,
+  },
 });
 
 export default App;
